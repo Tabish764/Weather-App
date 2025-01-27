@@ -13,7 +13,7 @@ const Weather = () => {
     const [weather,setWeather] = useState({})
     const [error,setError] = useState('')
     const [city,setCity] = useState('Karachi')
-    const [data,setData] = useState([])
+    
     const getWeather = async(city) =>{
         const allIcons= {
             '01d': clear_icon,
@@ -33,16 +33,16 @@ const Weather = () => {
         }
        
        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${"baf006be54d61b49b009cdf85a7f80e0"}`)
-       setData(response.data)
+       let data =response.data
        console.log(response);
       
        try {
         setWeather({
                 humidity: data.main.humidity,
                 windSpeed: data.wind.speed,
-                temperature: Math.floor(data.main.temp - 273.15), // Should be converted from Kelvin to Celsius
+                temperature: Math.floor(data.main.temp - 273.15), 
                 location: data.name,
-                icon: allIcons[data.weather[0].icon] || clear_icon // Use the icon after data is retrieved
+                icon: allIcons[data.weather[0].icon] || clear_icon
             });
     }
     catch(error){
@@ -50,10 +50,12 @@ const Weather = () => {
     }
     }
     const handleClick = () =>{
+        console.log('clikced')
         getWeather(city)
     }
    function handleInput(e){
        setCity(e.target.value)
+      
    }
    useEffect(()=>{
     getWeather(city)
@@ -61,7 +63,7 @@ const Weather = () => {
   return (
     <>  
     
-     <div className='weather bg-gradient-to-r from-lime-600 max-w-[90%] sm:w-[400px] w-[280px] to-green-700 flex items-center sm:p-[40px] p-[10px] rounded-xl flex-col '>
+     <div className='weather bg-gradient-to-r from-lime-600 max-w-[90%] sm:w-[400px] w-[280px] to-green-700 flex justify-center items-center sm:p-[40px] p-[10px] rounded-xl flex-col '>
    <div className="search-bar flex sm:flex items-center gap-3">
     <input onChange={handleInput} className='sm:h-[50px] sm:w-[280px] w-[180px] border-none outline-none rounded-full pl-[20px] mt-5 sm:pl-[25px] text-black text-2xl' type="text" value={city} placeholder='Search' />
     <img className='sm:w-[50px] w-[30px] p-[7px] sm:p-[15px] mt-5 rounded-full cursor-pointer bg-white' src={search_icon} alt="" onClick={handleClick} />
