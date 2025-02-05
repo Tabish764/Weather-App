@@ -7,6 +7,7 @@ import rain_icon from '../src/assets/rain.png'
 import snow_icon from '../src/assets/snow.png'
 import wind_icon from '../src/assets/wind.png'
 import humidity_icon from '../src/assets/humidity.png'
+import night_icon from '../src/assets/night_icon.png'
 import axios from 'axios'
 
 const Weather = () => {
@@ -17,7 +18,7 @@ const Weather = () => {
     const getWeather = async(city) =>{
         const allIcons= {
             '01d': clear_icon,
-            "01n": clear_icon,
+            "01n": night_icon,
             '02d': cloud_icon,
             '02n': cloud_icon,
             '03d': cloud_icon,
